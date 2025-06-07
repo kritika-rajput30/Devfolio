@@ -216,37 +216,34 @@ export const certificates2 = [
 ];
 export const projects = [
   {
-    title: "Pintrest",
+    title: "Electronic shoppe",
     image: stage,
-    gitlink: "https://github.com/kritikaVijaysinghRajput/PINTREST",
+    gitlink: "https://github.com/kritika-rajput30/Variables-Electronic-website",
   },
   {
-    title: "Electronic_store",
+    title: "Urban Store",
     image: urbanstore,
-    gitlink:
-      "https://github.com/kritikaVijaysinghRajput/Mobile-Shopee-Variables",
+    gitlink: "https://github.com/kritika-rajput30/Urban-Store",
   },
   {
-    title: "spotify",
-    gitlink: "https://github.com/kritikaVijaysinghRajput/Spotify-Clone",
-    deploylink: "https://spotify-clone-iota-self.vercel.app/",
-    image: spotify,
+    title: "Teamboard",
+    gitlink: "https://github.com/kritika-rajput30/Teamboard",
+    image: social,
   },
   {
     title: "ACADEMIX",
     image: academix,
-    gitlink:
-      "https://github.com/kritikaVijaysinghRajput/academix-education_platform",
+    gitlink: "https://github.com/kritika-rajput30",
   },
   {
     title: "Airbnb",
-    gitlink: "https://github.com/kritikaVijaysinghRajput/Traveler-Booking-app",
+    gitlink: "https://github.com/kritika-rajput30",
     image: airbnb,
   },
   {
     title: "social",
     image: social,
-    gitlink: "https://github.com/kritikaVijaysinghRajput/tumbler-frontend",
+    gitlink: "https://github.com/kritika-rajput30",
     deploylink: "https://tumbler-frontend.vercel.app/",
   },
 ];
