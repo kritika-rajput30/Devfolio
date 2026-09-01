@@ -7,7 +7,7 @@ import Index from "./pages/Index";
 import Footer from "./components/Footer";
 const App = () => {
   return (
-    <div className=" dark:text-white dark:bg-[#191919] bg-white text-black overflow-x-hidden ">
+    <div className="bg-night text-white overflow-x-hidden">
       <AnimatePresence>
         <Routes>
           <Route path="/" element={<Index />} />

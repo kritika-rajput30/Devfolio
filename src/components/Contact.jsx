@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";
 import { coder } from "../assets";
+import { styles } from "../styles";
+import Reveal from "./Reveal";
 
 const Contact = () => {
-  const [isSent, setIsSent] = useState(false);
   const formRef = useRef();
   const [form, setForm] = useState({
     name: "",
@@ -20,9 +21,6 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
-    // template_by937ha
-    // service_f9lge7n
-    // xSUXSNQa16ExCz0zO
     emailjs
       .send(
         "service_f9lge7n",
@@ -56,12 +54,12 @@ const Contact = () => {
   return (
     <section
       id="contact"
-      className=" flex md:flex-row flex-col px-8 justify-center gap-8"
+      className="flex md:flex-row flex-col px-8 py-20 justify-center gap-8"
     >
-      <div className="shadow-md md:w-6/12">
-        <div className="md:mx-20 p-8 h-min  rounded-2xl border-2 ">
-          <p className=" happy-font font-bold">get in touch</p>
-          <p className=" text-5xl font-bold">CONTACT ME</p>
+      <Reveal className="shadow-md md:w-6/12">
+        <div className="md:mx-20 p-8 h-min rounded-2xl border-2 border-current">
+          <p className={styles.eyebrow}>Get in touch</p>
+          <p className="text-5xl font-bold mb-4">CONTACT ME</p>
 
           <form
             ref={formRef}
@@ -69,53 +67,51 @@ const Contact = () => {
             className="mt-4 flex flex-col gap-4"
           >
             <label className="flex flex-col">
-              <span className="text-gray-500 font-medium mb-4">Your Name</span>
+              <span className="text-fog font-medium mb-2">Your Name</span>
               <input
                 placeholder="whats your name?"
                 onChange={handleChange}
                 value={form.name}
-                className=" dark:bg-black bg-gray-200 outline-sky-500 outline-4 py-4 px-4 placeholder:text-primary roundes-lg outlined-none  border-none font-medium"
+                className="bg-current/5 outline-grass outline-2 py-4 px-4 placeholder:text-fog rounded-lg border-none font-medium"
                 type="text"
                 name="name"
               />
             </label>
             <label className="flex flex-col">
-              <span className="text-gray-500 font-medium mb-4">Your Email</span>
+              <span className="text-fog font-medium mb-2">Your Email</span>
               <input
                 placeholder="enter your email here"
                 onChange={handleChange}
                 value={form.email}
-                className=" dark:bg-black bg-gray-200 outline-sky-500 outline-4 py-4 px-4 placeholder:text-primary roundes-lg outlined-none  border-none font-medium"
+                className="bg-current/5 outline-grass outline-2 py-4 px-4 placeholder:text-fog rounded-lg border-none font-medium"
                 type="email"
                 name="email"
               />
             </label>
             <label className="flex flex-col">
-              <span className="text-gray-500 font-medium mb-4">
-                Your Message
-              </span>
+              <span className="text-fog font-medium mb-2">Your Message</span>
               <textarea
                 rows={5}
                 placeholder="write message here"
                 onChange={handleChange}
                 value={form.message}
-                className=" dark:bg-black bg-gray-200 outline-sky-500 outline-4 py-4 px-4 placeholder:text-primary roundes-lg outlined-none  border-none font-medium"
+                className="bg-current/5 outline-grass outline-2 py-4 px-4 placeholder:text-fog rounded-lg border-none font-medium"
                 name="message"
               />
             </label>
             <button
-              className="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 text-sm px-5 py-2.5 text-center me-2 mb-2 font-bold rounded-full happy-font"
+              className="bg-grass text-night text-sm px-5 py-2.5 text-center me-2 mb-2 font-bold rounded-full w-fit"
               type="submit"
             >
               {loading ? "Sending..." : "Send"}
             </button>
           </form>
         </div>
-      </div>
+      </Reveal>
 
-      <div className=" md:w-6/12">
+      <Reveal delay={0.15} className="md:w-6/12">
         <img className="rounded-3xl" src={coder} alt="" />
-      </div>
+      </Reveal>
     </section>
   );
 };

@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import {
   database,
   webtools,
@@ -9,136 +8,72 @@ import {
   devops,
 } from "../constants";
 
-import { fadeIn, textVariant } from "../utils/motion";
-import { box, box2 } from "../assets";
+import { box } from "../assets";
+import { styles } from "../styles";
+import Reveal from "./Reveal";
 
-export const SkillsBox = ({ isDark }) => {
+const allTech = [
+  ...frontend,
+  ...backendtech,
+  ...database,
+  ...devops,
+  ...mobiletech,
+  ...webtools,
+];
+const tickerText = allTech.map((t) => t.name).join("  •  ") + "  •  ";
+
+const SkillGroup = ({ title, items, delay, progress }) => (
+  <Reveal delay={delay} className="frontend bg-current/5 rounded-3xl p-4 relative overflow-hidden">
+    <p className="font-bold mb-4 uppercase tracking-wide text-sm text-fog">
+      {title}
+    </p>
+    <div className="flex flex-wrap gap-2 p-1">
+      {items.map((item) => (
+        <p
+          key={item.name}
+          className="border-2 font-bold p-2 rounded-xl"
+          style={{ borderColor: item.color || "var(--grass)" }}
+        >
+          {item.name}
+        </p>
+      ))}
+    </div>
+    {progress != null && (
+      <progress
+        className="absolute bottom-0 w-full mt-8 -start-0 progress progress-success"
+        value={progress}
+        max="100"
+      ></progress>
+    )}
+  </Reveal>
+);
+
+export const SkillsBox = () => {
   return (
     <section id="featured">
-      <div className="md:mx-40 mx-10 relative">
-        <p className=" font-bold text-5xl flex mb-8 items-center gap-4 z-50 md:text-7xl">
+      <div className="md:mx-40 mx-10 relative py-16">
+        <p className={styles.eyebrow}>Skills</p>
+        <p className="font-bold text-5xl flex mb-8 items-center gap-4 md:text-7xl">
           SKILLBOX
-          <img
-            src={isDark ? box2 : box}
-            className={`${isDark ? "h-16" : "h-20"}`}
-            alt=""
-          />
+          <img src={box} className="h-16 md:h-20" alt="" />
         </p>
 
-        <div className="bucket happy-font  flex flex-wrap gap-4 text-sm">
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 1, 0.75)}
-            className="frontend dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Frontend</p>
-            <div className="flex flex-wrap gap-2">
-              {frontend.map((fe, index) => (
-                <p
-                  key={fe.name}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                  style={{ borderColor: fe.color }}
-                >
-                  {fe.name}
-                </p>
-              ))}
-            </div>
-          </motion.div>
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 2, 0.75)}
-            className="frontend dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Backend</p>
-            <div className="flex flex-wrap gap-2">
-              {backendtech.map((be, index) => (
-                <p
-                  key={be.name}
-                  style={{ borderColor: be.color }}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                >
-                  {be.name}
-                </p>
-              ))}
-            </div>
-          </motion.div>
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 3, 0.75)}
-            className="frontend dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Database</p>
-            <div className="flex flex-wrap gap-2">
-              {database.map((db, index) => (
-                <p
-                  key={db.name}
-                  style={{ borderColor: db.color }}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                >
-                  {db.name}
-                </p>
-              ))}
-            </div>
-          </motion.div>
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 4, 0.75)}
-            className="frontend relative overflow-hidden dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Devops</p>
-            <div className="flex flex-wrap gap-2 p-4">
-              {devops.map((dv, index) => (
-                <p
-                  key={dv.name}
-                  style={{ borderColor: dv.color }}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                >
-                  {dv.name}
-                </p>
-              ))}
-            </div>
-            <progress
-              className="absolute bottom-0 w-full mt-8 -start-0 progress progress-accent"
-              value="85"
-              max="100"
-            ></progress>
-          </motion.div>
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 5, 0.75)}
-            className="frontend overflow-hidden relative dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Mobile</p>
-            <div className="flex flex-wrap gap-2 p-4">
-              {mobiletech.map((dv, index) => (
-                <p
-                  key={dv.name}
-                  style={{ borderColor: dv.color }}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                >
-                  {dv.name}
-                </p>
-              ))}
-            </div>
-            <progress
-              className="absolute bottom-0 w-full mt-8 -start-0 progress progress-error"
-              value="70"
-              max="100"
-            ></progress>
-          </motion.div>
+        <div className="marquee-container mb-10 text-fog">
+          <p className="marquee-text text-2xl md:text-4xl font-semibold uppercase tracking-wide">
+            {tickerText}
+          </p>
+          <p className="marquee-text2 text-2xl md:text-4xl font-semibold uppercase tracking-wide">
+            {tickerText}
+          </p>
+        </div>
 
-          <motion.div
-            variants={fadeIn("right", "spring", 0.5 * 7, 0.75)}
-            className="frontend dark:bg-zinc-800 bg-gray-200   rounded-3xl p-4"
-          >
-            <p className="font-bold mb-4">Tool's</p>
-            <div className="flex flex-wrap gap-2">
-              {webtools.map((wt, index) => (
-                <p
-                  key={wt.name}
-                  style={{ borderColor: wt.color }}
-                  className={` dark:text-white border-2 happy-font font-bold border-black dark:bg-black p-2 rounded-xl`}
-                >
-                  {wt.name}
-                </p>
-              ))}
-            </div>
-          </motion.div>
+        <div className="bucket flex flex-wrap gap-4 text-sm">
+          <SkillGroup title="Frontend" items={frontend} delay={0.05} />
+          <SkillGroup title="Backend" items={backendtech} delay={0.1} />
+          <SkillGroup title="Database" items={database} delay={0.15} />
+          <SkillGroup title="Devops" items={devops} delay={0.2} progress={85} />
+          <SkillGroup title="Mobile" items={mobiletech} delay={0.25} progress={70} />
+          <SkillGroup title="Tool's" items={webtools} delay={0.3} />
         </div>
       </div>
     </section>

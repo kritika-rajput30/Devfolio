@@ -1,5 +1,6 @@
-import { Email, GitHub, LinkedIn, X } from "@mui/icons-material";
+import { Email, GitHub, LinkedIn } from "@mui/icons-material";
 import React from "react";
+
 const Footer = () => {
   const contacts = [
     {
@@ -22,21 +23,23 @@ const Footer = () => {
     },
   ];
   return (
-    <div className="relative flex justify-center gap-4 items-center p-2">
+    <div
+      data-band="night"
+      className="relative flex justify-center gap-4 items-center p-4 bg-night text-white"
+    >
       <div>
-        <p className="font-bold md:text-xl text-sm happy-font">
-          kritikarajput@2025
-        </p>
+        <p className="font-bold md:text-xl text-sm">kritikarajput@2025</p>
       </div>
-      <div className="bg-current h-8 p-1"></div>
-      <div className="contact p-2 ">
+      <div className="bg-grass h-8 w-[2px]"></div>
+      <div className="contact p-2">
         <ul className="list-none flex my-4 gap-2">
           {contacts.map((link) => (
             <a
               href={link.url}
               key={link.id}
               target="_blank"
-              className={` shadow-2xl rounded-full p-1  gap-2 font-medium cursor-pointer transition-transform transform rotate-x-51 rotate-z-43 hover:translate-y-[-16px] hover:rotate-x-51 hover:rotate-z-43 hover:shadow-md border-rounded-md`}
+              rel="noreferrer"
+              className="text-white hover:text-grass transition-colors rounded-full p-1 gap-2 font-medium cursor-pointer"
             >
               {link.icon}
             </a>

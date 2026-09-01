@@ -4,13 +4,13 @@ const styles = {
   padding: "sm:px-16 px-6 sm:py-16 py-10",
 
   heroHeadText:
-    "font-bold lg:text-[80px] sm:text-[70px] xs:text-[60px] text-[38px] lg:leading-[98px] mt-2",
-  heroSubText:
-    " font-medium lg:text-[30px] sm:text-[26px] xs:text-[15px] text-[16px] lg:leading-[40px]",
+    "font-black leading-[0.9] tracking-tight text-[15vw] sm:text-[13vw] md:text-[12vw] uppercase",
+  heroSubText: "font-medium text-lg sm:text-xl md:text-2xl leading-snug",
+
+  eyebrow: "text-xs md:text-sm font-semibold uppercase tracking-[0.2em] text-fog",
 
   sectionHeadText:
-    "text-bold font-black   bg-gradient-to-r from-sky-400 to-blue-500 bg-clip-text text-transparent     md:text-[60px] sm:text-[50px] xs:text-[40px] text-[30px]",
-  sectionSubText:
-    "sm:text-[18px] text-[14px] text-secondary uppercase tracking-wider",
+    "font-black uppercase leading-[0.95] text-[12vw] sm:text-[9vw] md:text-[6vw]",
+  sectionSubText: "sm:text-[18px] text-[14px] text-fog uppercase tracking-wider",
 };
 export { styles };
