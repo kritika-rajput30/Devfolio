@@ -8,7 +8,7 @@ const Resume = () => {
         className="lg:tooltip tooltip-right happy-font font-bold p-2 text-xs"
         data-tip="resume"
         href={resume}
-        download="resume.pdf"
+        download="KritikaRajput.pdf"
       >
         Download
       </a>
