@@ -4,9 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        grass: "#8ed462",
-        night: "#1e201b",
-        cream: "#f5f1e4",
+        grass: "#f0a868", // warm apricot (token name kept for stability)
+        night: "#2b2622", // warm charcoal (softer than hard black)
+        cream: "#fffdf8", // bright warm off-white
         fog: "#a3a69e",
       },
       fontFamily: {

@@ -4,10 +4,19 @@
 @tailwind utilities;
 
 :root {
-  --grass: #8ed462;
-  --night: #1e201b;
-  --cream: #f5f1e4;
+  /* --grass token kept for naming stability; value is now warm apricot */
+  --grass: #f0a868;
+  --night: #2b2622; /* warm charcoal — softer than a hard black against the warm palette */
+  --cream: #fffdf8; /* bright warm off-white — wave reads crisp against the apricot */
   --fog: #a3a69e;
+}
+
+/* Smooth wheel/anchor scrolling is handled by Lenis (see App.jsx).
+   Keep a native fallback for reduced-motion users, where Lenis is off. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 * {
@@ -241,15 +250,30 @@
   }
 }
 
-/* #hero thumbnail strip — slow horizontal drift */
+/* #hero card strip — a straight horizontal row of upright cards that drifts
+   sideways and clips at the viewport edges (reference-style marquee). */
 .thumb-marquee {
   overflow: hidden;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 6%,
+    #000 94%,
+    transparent
+  );
 }
 
 .thumb-marquee-track {
   display: flex;
   width: max-content;
-  animation: thumbScroll 32s linear infinite;
+  animation: thumbScroll 40s linear infinite;
 }
 
 @keyframes thumbScroll {

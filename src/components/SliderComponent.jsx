@@ -1,12 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { GitHub, Launch } from "@mui/icons-material";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { projects } from "../constants";
 import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 
+const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
 const ProjectCard = ({ project }) => (
-  <div className="relative rounded-lg shadow-md h-72 w-[85vw] sm:w-[380px] shrink-0 overflow-hidden">
+  <div className="relative rounded-3xl border-[10px] border-cream shadow-md h-72 w-[85vw] sm:w-[380px] shrink-0 overflow-hidden">
     <img
       src={project.image}
       alt={project.title}
@@ -34,26 +36,53 @@ const SliderComponent = () => {
   const prefersReducedMotion = usePrefersReducedMotion();
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
-  const [distance, setDistance] = useState(0);
 
-  const { scrollYProgress } = useScroll({ target: sectionRef });
-  const x = useTransform(scrollYProgress, [0, 1], [0, -distance]);
+  // horizontal offset of the card row; a faint word behind drifts slower
+  const x = useMotionValue(0);
+  const bgX = useMotionValue(0);
+  const [index, setIndex] = useState(1);
 
   useEffect(() => {
+    if (prefersReducedMotion) return;
+
+    let start = 0;
+    let end = 0;
+
     const measure = () => {
-      if (trackRef.current) {
-        setDistance(
-          Math.max(trackRef.current.scrollWidth - window.innerWidth, 0)
-        );
-      }
+      const vw = window.innerWidth;
+      const trackW = trackRef.current ? trackRef.current.scrollWidth : 0;
+      start = vw * 0.5; // cards enter from the right edge
+      end = -(trackW - vw * 0.5); // ...and exit past the left edge
     };
+
+    // vertical progress through the tall section -> horizontal sweep
+    const onScroll = () => {
+      const el = sectionRef.current;
+      if (!el) return;
+      const total = el.offsetHeight - window.innerHeight;
+      const progress = total > 0 ? clamp(-el.getBoundingClientRect().top / total, 0, 1) : 0;
+      x.set(start + (end - start) * progress);
+      bgX.set(240 + (-680 - 240) * progress);
+      setIndex(
+        clamp(Math.ceil(progress * projects.length), 1, projects.length)
+      );
+    };
+
     measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
-  }, []);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", () => {
+      measure();
+      onScroll();
+    });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [prefersReducedMotion, x, bgX]);
 
   const scrollByCards = (dir) => {
-    window.scrollBy({ top: dir * window.innerHeight * 0.4, behavior: "smooth" });
+    window.scrollBy({ top: dir * window.innerHeight * 0.5, behavior: "smooth" });
   };
 
   const header = (
@@ -80,6 +109,7 @@ const SliderComponent = () => {
     </div>
   );
 
+  // Reduced motion: plain swipeable row, no pinning / no scroll-jack.
   if (prefersReducedMotion) {
     return (
       <section id="work" className="relative bg-night text-white py-4">
@@ -96,14 +126,42 @@ const SliderComponent = () => {
   }
 
   return (
-    <section id="work" ref={sectionRef} className="relative bg-night text-white h-[250vh]">
+    // Tall section -> the sticky panel stays pinned while you scroll its
+    // height; the cards sweep right -> left. When the section runs out the
+    // pin releases and the page "moves up" to the next section.
+    <section
+      id="work"
+      ref={sectionRef}
+      className="relative bg-night text-white h-[320vh]"
+    >
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        {/* parallax word behind the cards */}
+        <motion.p
+          style={{ x: bgX }}
+          aria-hidden="true"
+          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 whitespace-nowrap text-[24vh] font-black leading-none uppercase text-white/5 select-none"
+        >
+          Projects&nbsp;·&nbsp;Projects&nbsp;·&nbsp;Projects&nbsp;·
+        </motion.p>
+
         {header}
-        <motion.div ref={trackRef} style={{ x }} className="flex gap-6 px-4 md:px-8">
+
+        {/* the horizontally-swept card row */}
+        <motion.div
+          ref={trackRef}
+          style={{ x }}
+          className="flex gap-6 px-4 md:px-8 will-change-transform"
+        >
           {projects.map((project) => (
             <ProjectCard key={project.title} project={project} />
           ))}
         </motion.div>
+
+        {/* progress counter */}
+        <div className="absolute bottom-6 right-4 md:right-8 z-10 font-semibold text-sm tracking-[0.2em] text-white/70">
+          {String(index).padStart(2, "0")} /{" "}
+          {String(projects.length).padStart(2, "0")}
+        </div>
       </div>
     </section>
   );

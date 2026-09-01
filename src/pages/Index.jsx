@@ -1,22 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { useMediaQuery } from "@mui/material";
 
 import Certification from "../components/Certification";
-import Creative from "../components/Creative";
 import Contact from "../components/Contact";
-import Hero from "../components/Hero";
-import Services from "../components/Services";
+import ExpertisePath from "../components/ExpertisePath";
 import SliderComponent from "../components/SliderComponent";
 import Resume from "../components/Resume";
 import { SkillsBox } from "../components/SkillsBox";
 import LinesComponent from "../components/LinesComponent";
 import SectionDivider from "../components/SectionDivider";
-import Reveal from "../components/Reveal";
+import SectionWaveTop from "../components/SectionWaveTop";
 
-import { rocket } from "../assets";
 import { Close, DragHandleOutlined, Email, GitHub, LinkedIn } from "@mui/icons-material";
-import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
 import CallOutlinedIcon from "@mui/icons-material/CallOutlined";
 import ViewInArOutlinedIcon from "@mui/icons-material/ViewInArOutlined";
@@ -35,17 +30,8 @@ const heroThumbs = [
   { src: thumbSocial, alt: "Social preview" },
 ];
 
-// Fan the thumbnails into a shallow semi-circle: outer cards tilt out and
-// drop slightly, inner cards stay near-upright — like a hand of cards.
-const HERO_ARC = [
-  { rotate: -10, y: 18 },
-  { rotate: -4, y: 4 },
-  { rotate: 4, y: 4 },
-  { rotate: 10, y: 18 },
-];
 
 const navLinks = [
-  { id: "about", title: "About", icon: <HomeOutlinedIcon fontSize="small" /> },
   { id: "work", title: "Work", icon: <WorkOutlineOutlinedIcon fontSize="small" /> },
   { id: "contact", title: "Contact", icon: <CallOutlinedIcon fontSize="small" /> },
   { id: "featured", title: "Featured", icon: <ViewInArOutlinedIcon fontSize="small" /> },
@@ -89,7 +75,6 @@ const BAND_FILL = {
 };
 
 const Index = () => {
-  const isNonMobileScreens = useMediaQuery("(min-width:1000px)");
   const [hoveredLink, setHoveredLink] = useState(null);
   const [active, setActive] = useState("");
   const [toggle, setToggle] = useState(true);
@@ -130,7 +115,8 @@ const Index = () => {
   const bandClass = (declared) => BAND_CLASSES[band(declared)];
   const bandFill = (declared) => BAND_FILL[band(declared)];
 
-  const headerTextClass = headerBand === "cream" ? "text-night" : "text-white";
+  // Soft ("light shade") black on light bands, white only over the night band.
+  const headerTextClass = headerBand === "night" ? "text-white" : "text-night/80";
 
   return (
     <div>
@@ -142,7 +128,7 @@ const Index = () => {
             Kritika
           </p>
 
-          <div className="links">
+          <div className="ml-auto flex items-center gap-8">
             <ul className="list-none hidden sm:flex flex-row items-center gap-8">
               {navLinks.map((link) => (
                 <li
@@ -161,33 +147,15 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <label
-              className="inline-flex items-center cursor-pointer"
-              data-tip={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            >
-              <input
-                type="checkbox"
-                checked={theme === "dark"}
-                onChange={() => setTheme((t) => (t === "dark" ? "light" : "dark"))}
-                className="sr-only peer"
-                aria-label="Toggle dark mode"
-              />
-              <div className="relative w-10 h-5 bg-current/20 peer-checked:bg-grass rounded-full transition-colors">
-                <div className="absolute top-[2px] start-[2px] bg-current h-4 w-4 rounded-full transition-transform peer-checked:translate-x-full" />
-              </div>
-            </label>
 
             <Resume />
-          </div>
 
-          <div
-            className="sm:hidden cursor-pointer flex items-center"
-            onClick={() => setToggle(!toggle)}
-          >
-            {toggle ? <DragHandleOutlined /> : <Close />}
+            <div
+              className="sm:hidden cursor-pointer flex items-center"
+              onClick={() => setToggle(!toggle)}
+            >
+              {toggle ? <DragHandleOutlined /> : <Close />}
+            </div>
           </div>
 
           <motion.div
@@ -232,138 +200,73 @@ const Index = () => {
 
       <LinesComponent />
 
-      {/* HERO */}
-      <div data-band={band("grass")} className="relative">
+      {/* HERO — stays pinned for an extra ~30vh so the next section can slide
+          up and overlay it (the wave "curtain" gets pulled up over the hero). */}
+      <div
+        data-band={band("grass")}
+        className={`relative h-[150vh] ${bandClass("grass")}`}
+      >
         <div
           id="home"
           className={`sticky top-0 h-screen z-0 flex flex-col items-center justify-center text-center px-6 md:px-16 overflow-hidden ${bandClass(
             "grass"
           )}`}
         >
-          <p className="font-bold tracking-tight leading-[0.9] uppercase text-[13vw] sm:text-[9vw] md:text-[7vw]">
+          <h1 className="font-extrabold tracking-[-0.02em] leading-[0.9] uppercase text-[13vw] sm:text-[10vw] md:text-[7.5vw]">
             Kritika
+          </h1>
+          <p className="mt-5 text-base md:text-xl font-medium opacity-70">
+            Full Stack Developer &amp; Freelancer
           </p>
-          <p className="mt-6 text-2xl md:text-4xl font-medium">
-            Full Stack Developer & Freelancer
-          </p>
-          <p className="mt-4 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] opacity-80">
-            1.5+ years of experience · Available for full-time & freelance
+          <p className="mt-3 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] opacity-55">
+            1.5+ years of experience · Available for full-time &amp; freelance
             work
           </p>
 
-          <div className="thumb-marquee mt-14 w-full max-w-4xl">
-            <div className="thumb-marquee-track items-center gap-4">
-              {[...heroThumbs, ...heroThumbs].map((thumb, i) => {
-                const arc = HERO_ARC[i % HERO_ARC.length];
-                return (
-                  <img
-                    key={`${thumb.alt}-${i}`}
-                    src={thumb.src}
-                    alt={thumb.alt}
-                    style={{ transform: `rotate(${arc.rotate}deg) translateY(${arc.y}px)` }}
-                    className="h-24 md:h-32 w-auto rounded-2xl shadow-lg border-4 border-cream object-cover"
-                  />
-                );
-              })}
+          <div className="thumb-marquee mt-12 md:mt-16 w-full max-w-3xl mx-auto">
+            <div className="thumb-marquee-track items-center gap-4 md:gap-5 px-3">
+              {[...heroThumbs, ...heroThumbs].map((thumb, i) => (
+                <img
+                  key={`${thumb.alt}-${i}`}
+                  src={thumb.src}
+                  alt={thumb.alt}
+                  className="h-24 w-24 md:h-32 md:w-32 shrink-0 rounded-lg border-4 border-white object-cover shadow-lg shadow-night/20"
+                />
+              ))}
             </div>
           </div>
-          <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] opacity-70">
+          <p className="mt-8 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
             4 recent builds
           </p>
+
+          {/* a peek of the cream wave sits at the hero's bottom edge at rest;
+              the real cream curtain rises up and merges with it on scroll */}
+          <SectionDivider fill={bandFill("cream")} height="h-28 md:h-40" />
         </div>
+      </div>
+
+      {/* WHAT I DO — the cream curtain rides up over the pinned hero, then a
+          scroll-scrubbed "snake" timeline draws the disciplines in. */}
+      <div
+        data-band={band("cream")}
+        className={`relative z-10 -mt-[7vh] h-[280vh] md:-mt-[10vh] motion-reduce:h-auto ${bandClass(
+          "cream"
+        )}`}
+      >
+        <SectionWaveTop fill={bandFill("cream")} height="h-28 md:h-52" />
+        <ExpertisePath />
         <SectionDivider fill={bandFill("night")} />
       </div>
 
       {/* FEATURED PROJECTS — the one pinned horizontal scene */}
-      <div data-band={band("night")} className="relative">
+      <div data-band={band("night")} className={`relative ${bandClass("night")}`}>
         <SliderComponent />
-        <SectionDivider fill={bandFill("cream")} />
+        <SectionDivider fill={bandFill("cream")} height="h-28 md:h-48" />
       </div>
-
-      {/* EXPERTISE */}
-      <div
-        data-band={band("cream")}
-        className={`relative py-20 px-4 md:px-16 ${bandClass("cream")}`}
-      >
-        <Reveal className="mb-8">
-          <p className={styles.eyebrow}>What I do</p>
-          <p className="font-bold text-5xl md:text-7xl flex items-center gap-3">
-            EXPERTISE
-            <img src={rocket} className="h-16 md:h-20" alt="" />
-          </p>
-        </Reveal>
-        <Services />
-        <SectionDivider fill={bandFill("grass")} />
-      </div>
-
-      {/* PORTFOLIO editorial heading */}
-      <div
-        data-band={band("grass")}
-        className={`relative py-16 px-4 overflow-hidden ${bandClass("grass")}`}
-      >
-        <Reveal>
-          <p className="text-center text-[16vw] md:text-[9vw] font-black leading-none uppercase">
-            portfolio.
-          </p>
-        </Reveal>
-        <SectionDivider fill={bandFill("night")} />
-      </div>
-
-      {/* ABOUT */}
-      <section
-        id="about"
-        data-band={band("night")}
-        className={`relative py-20 px-4 md:px-16 overflow-hidden ${bandClass("night")}`}
-      >
-        <Hero />
-        <Reveal className="difference flex flex-col p-2 mt-16" delay={0.1}>
-          <div className="flex items-center gap-8 md:gap-36">
-            <div className="flex">
-              <p className="md:text-[18rem] font-black text-[7rem] leading-none">Self</p>
-              <p className="font-bold md:text-[7rem] mb-6 text-[2.5rem] flex items-end">&</p>
-            </div>
-            {isNonMobileScreens && (
-              <p className="mt-20 text-xl text-fog">
-                My standout quality lies in my versatility across diverse
-                fields within technology. While others may specialize in one
-                area, I excel in web development, mobile app development,
-                backend solutions, and UI/UX design. This versatility allows
-                me to offer unique insights, solve complex problems
-                creatively, and deliver innovative solutions that stand out
-                in the competitive landscape.
-              </p>
-            )}
-          </div>
-          <div className="flex justify-between md:-mt-32 -mt-16">
-            <p className="md:text-[18rem] font-black text-[6rem] leading-none">Others</p>
-          </div>
-          {!isNonMobileScreens && (
-            <p className="font-medium p-2 text-fog">
-              My standout quality lies in my versatility across diverse
-              fields within technology. While others may specialize in one
-              area, I excel in web development, mobile app development,
-              backend solutions, and UI/UX design. This versatility allows
-              me to offer unique insights, solve complex problems
-              creatively, and deliver innovative solutions that stand out in
-              the competitive landscape.
-            </p>
-          )}
-        </Reveal>
-        <SectionDivider fill={bandFill("cream")} />
-      </section>
 
       {/* SKILLBOX */}
       <div data-band={band("cream")} className={`relative ${bandClass("cream")}`}>
         <SkillsBox />
-        <SectionDivider fill={bandFill("grass")} />
-      </div>
-
-      {/* CREATIVE */}
-      <div
-        data-band={band("grass")}
-        className={`relative overflow-hidden ${bandClass("grass")}`}
-      >
-        <Creative />
         <SectionDivider fill={bandFill("night")} />
       </div>
 
