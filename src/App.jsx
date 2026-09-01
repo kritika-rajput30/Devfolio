@@ -6,6 +6,7 @@ import { ReactLenis } from "lenis/react";
 
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
+import WorkDetail from "./pages/WorkDetail";
 import Footer from "./components/Footer";
 import usePrefersReducedMotion from "./hooks/usePrefersReducedMotion";
 
@@ -28,6 +29,7 @@ const App = () => {
         <AnimatePresence>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/work/:slug" element={<WorkDetail />} />
           </Routes>
         </AnimatePresence>
         <Footer />

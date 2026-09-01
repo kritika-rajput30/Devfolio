@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-import Certification from "../components/Certification";
 import Contact from "../components/Contact";
 import ExpertisePath from "../components/ExpertisePath";
+import FreelanceWork from "../components/FreelanceWork";
 import SliderComponent from "../components/SliderComponent";
 import Resume from "../components/Resume";
 import { SkillsBox } from "../components/SkillsBox";
@@ -267,19 +267,18 @@ const Index = () => {
       {/* SKILLBOX */}
       <div data-band={band("cream")} className={`relative ${bandClass("cream")}`}>
         <SkillsBox />
-        <SectionDivider fill={bandFill("night")} />
+        <SectionDivider fill={bandFill("grass")} />
       </div>
 
-      {/* CERTIFICATION */}
-      <div data-band={band("night")} className={`relative ${bandClass("night")}`}>
-        <Certification />
-        <SectionDivider fill={bandFill("cream")} />
+      {/* FREELANCE WORK */}
+      <div data-band={band("grass")} className={`relative ${bandClass("grass")}`}>
+        <FreelanceWork />
+        <SectionDivider fill={bandFill("night")} />
       </div>
 
       {/* CONTACT */}
-      <div data-band={band("cream")} className={`relative ${bandClass("cream")}`}>
+      <div data-band={band("night")} className={`relative ${bandClass("night")}`}>
         <Contact />
-        <SectionDivider fill={bandFill("night")} />
       </div>
     </div>
   );
