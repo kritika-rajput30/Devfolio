@@ -106,7 +106,7 @@ const ExpertisePath = () => {
               ref={pathRef}
               d={WAVE_D}
               fill="none"
-              stroke="var(--grass)"
+              stroke="var(--night)"
               strokeWidth="4"
               strokeLinecap="round"
               pathLength="1"
@@ -124,7 +124,7 @@ const ExpertisePath = () => {
                     y1={nd.y}
                     x2={nd.x}
                     y2={pillY}
-                    stroke="var(--grass)"
+                    stroke="var(--night)"
                     strokeWidth="3"
                     strokeLinecap="round"
                     style={{
@@ -136,8 +136,8 @@ const ExpertisePath = () => {
                     cx={nd.x}
                     cy={nd.y}
                     r={active ? 8 : 5}
-                    fill={active ? "var(--grass)" : "var(--cream)"}
-                    stroke="var(--grass)"
+                    fill={active ? "var(--night)" : "var(--cream)"}
+                    stroke="var(--night)"
                     strokeWidth="3"
                     style={{
                       opacity: active ? 1 : 0,
@@ -157,7 +157,7 @@ const ExpertisePath = () => {
             return (
               <div
                 key={`p-${i}`}
-                className="absolute w-max max-w-[70vw] rounded-[26px] bg-white px-4 py-2.5 text-center shadow-[0_16px_40px_-12px_rgba(0,0,0,0.35)] transition-all duration-300 md:max-w-none md:rounded-full md:px-5 md:py-3"
+                className="absolute w-max max-w-[70vw] rounded-[26px] border-2 border-night bg-white px-4 py-2.5 text-center shadow-[6px_6px_0_0_var(--night)] transition-all duration-300 md:max-w-none md:rounded-full md:px-5 md:py-3"
                 style={{
                   left: `${(nd.x / VB_W) * 100}%`,
                   top: `${(PILL_Y[STEPS[i].side] / VB_H) * 100}%`,

@@ -1,10 +1,12 @@
 import React from "react";
 
 /**
- * Subtle wavy seam placed at the bottom edge of a section. `fill` should be
- * the background color of the section that comes NEXT, so the wave reads as
- * that band rising up into the one above it.
+ * Wavy seam at the bottom edge of a section. `fill` is the white body below;
+ * a black stroke on the top curve is what actually separates the sections in
+ * the monochrome layout.
  */
+const CURVE = "M0,40 C240,85 480,5 720,32 C960,59 1200,12 1440,45";
+
 const SectionDivider = ({ fill = "var(--cream)", height = "h-12 md:h-20" }) => {
   return (
     <div
@@ -16,9 +18,13 @@ const SectionDivider = ({ fill = "var(--cream)", height = "h-12 md:h-20" }) => {
         preserveAspectRatio="none"
         className={`block w-full ${height}`}
       >
+        <path d={`${CURVE} L1440,100 L0,100 Z`} fill={fill} />
         <path
-          d="M0,40 C240,85 480,5 720,32 C960,59 1200,12 1440,45 L1440,100 L0,100 Z"
-          fill={fill}
+          d={CURVE}
+          fill="none"
+          stroke="var(--night)"
+          strokeWidth="2.5"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     </div>

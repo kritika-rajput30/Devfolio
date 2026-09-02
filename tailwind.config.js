@@ -4,10 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        grass: "#f0a868", // warm apricot (token name kept for stability)
-        night: "#2b2622", // warm charcoal (softer than hard black)
-        cream: "#fffdf8", // bright warm off-white
-        fog: "#a3a69e",
+        grass: "#ffffff", // token name kept for stability
+        night: "#181818",
+        cream: "#ffffff",
+        fog: "#8b8b8b",
+        blush: "#e8b7c4",
+        lav: "#cdbce6",
       },
       fontFamily: {
         sans: [

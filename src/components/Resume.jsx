@@ -3,16 +3,16 @@ import { resume } from "../assets";
 
 const Resume = () => {
   return (
-    <div className="bg-night text-cream text-sm text-center rounded-full font-bold flex items-center">
-      <a
-        className="lg:tooltip tooltip-right font-bold px-4 py-2 text-xs uppercase tracking-wide"
-        data-tip="resume"
-        href={resume}
-        download="KritikaRajput.pdf"
-      >
-        Download
-      </a>
-    </div>
+    <a
+      className="flex items-center gap-1.5 text-sm font-medium"
+      href={resume}
+      download="KritikaRajput.pdf"
+    >
+      <span aria-hidden="true" className="opacity-50">
+        &#8627;
+      </span>
+      Resume
+    </a>
   );
 };
 

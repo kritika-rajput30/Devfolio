@@ -8,7 +8,7 @@ import usePrefersReducedMotion from "../hooks/usePrefersReducedMotion";
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
 
 const ProjectCard = ({ project }) => (
-  <div className="relative rounded-3xl border-[10px] border-cream shadow-md h-72 w-[85vw] sm:w-[380px] shrink-0 overflow-hidden">
+  <div className="relative rounded-3xl border-[10px] border-night shadow-md h-72 w-[85vw] sm:w-[380px] shrink-0 overflow-hidden">
     <img
       src={project.image}
       alt={project.title}
@@ -87,7 +87,7 @@ const SliderComponent = () => {
 
   const header = (
     <div className="flex justify-between items-center px-4 md:px-8 pt-8 pb-4 relative z-10">
-      <div className="bg-grass text-night text-sm px-5 py-2.5 text-center rounded-3xl font-bold flex items-center">
+      <div className="bg-night text-cream text-sm px-5 py-2.5 text-center rounded-3xl font-bold flex items-center">
         Featured Projects
       </div>
       <div className="bg-cream text-night w-min flex gap-4 border-2 border-current rounded-3xl p-2">
@@ -112,7 +112,7 @@ const SliderComponent = () => {
   // Reduced motion: plain swipeable row, no pinning / no scroll-jack.
   if (prefersReducedMotion) {
     return (
-      <section id="work" className="relative bg-night text-white py-4">
+      <section id="work" className="relative bg-cream text-night py-4">
         {header}
         <div className="flex gap-6 overflow-x-auto px-4 md:px-8 pb-8 snap-x snap-mandatory">
           {projects.map((project) => (
@@ -132,14 +132,14 @@ const SliderComponent = () => {
     <section
       id="work"
       ref={sectionRef}
-      className="relative bg-night text-white h-[320vh]"
+      className="relative bg-cream text-night h-[320vh]"
     >
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* parallax word behind the cards */}
         <motion.p
           style={{ x: bgX }}
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 whitespace-nowrap text-[24vh] font-black leading-none uppercase text-white/5 select-none"
+          className="pointer-events-none absolute top-1/2 left-0 -translate-y-1/2 whitespace-nowrap text-[24vh] font-black leading-none uppercase text-night/[0.05] select-none"
         >
           Projects&nbsp;·&nbsp;Projects&nbsp;·&nbsp;Projects&nbsp;·
         </motion.p>
@@ -158,7 +158,7 @@ const SliderComponent = () => {
         </motion.div>
 
         {/* progress counter */}
-        <div className="absolute bottom-6 right-4 md:right-8 z-10 font-semibold text-sm tracking-[0.2em] text-white/70">
+        <div className="absolute bottom-6 right-4 md:right-8 z-10 font-semibold text-sm tracking-[0.2em] text-night/60">
           {String(index).padStart(2, "0")} /{" "}
           {String(projects.length).padStart(2, "0")}
         </div>

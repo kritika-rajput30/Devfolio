@@ -25,12 +25,12 @@ const Footer = () => {
   return (
     <div
       data-band="night"
-      className="relative flex justify-center gap-4 items-center p-4 bg-night text-white"
+      className="relative flex justify-center gap-4 items-center p-4 bg-cream text-night border-t-2 border-night"
     >
       <div>
         <p className="font-bold md:text-xl text-sm">kritikarajput@2025</p>
       </div>
-      <div className="bg-grass h-8 w-[2px]"></div>
+      <div className="bg-night h-8 w-[2px]"></div>
       <div className="contact p-2">
         <ul className="list-none flex my-4 gap-2">
           {contacts.map((link) => (
@@ -39,7 +39,7 @@ const Footer = () => {
               key={link.id}
               target="_blank"
               rel="noreferrer"
-              className="text-white hover:text-grass transition-colors rounded-full p-1 gap-2 font-medium cursor-pointer"
+              className="text-night hover:text-night/50 transition-colors rounded-full p-1 gap-2 font-medium cursor-pointer"
             >
               {link.icon}
             </a>

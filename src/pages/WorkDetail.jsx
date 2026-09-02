@@ -120,7 +120,7 @@ const WorkDetail = () => {
           </span>
           {project.status && (
             <span className="inline-flex items-center gap-1.5 text-xs font-medium text-night/60">
-              <span className="h-2 w-2 rounded-full bg-grass" />
+              <span className="h-2 w-2 rounded-full bg-night" />
               {project.status}
             </span>
           )}

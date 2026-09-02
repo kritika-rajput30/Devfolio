@@ -1,14 +1,23 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Kalam:wght@400;700&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  /* --grass token kept for naming stability; value is now warm apricot */
-  --grass: #f0a868;
-  --night: #2b2622; /* warm charcoal — softer than a hard black against the warm palette */
-  --cream: #fffdf8; /* bright warm off-white — wave reads crisp against the apricot */
-  --fog: #a3a69e;
+  --grass: #ffffff; /* token kept for naming stability */
+  --night: #181818;
+  --cream: #ffffff;
+  --fog: #8b8b8b;
+  --blush: #e8b7c4; /* rose accent */
+  --lav: #cdbce6; /* lavender accent */
+}
+
+.font-display {
+  font-family: "Fraunces", Georgia, "Times New Roman", serif;
+}
+
+.font-hand {
+  font-family: "Kalam", "Comic Sans MS", cursive;
 }
 
 /* Smooth wheel/anchor scrolling is handled by Lenis (see App.jsx).
@@ -246,6 +255,36 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-text,
   .marquee-text2 {
+    animation: none;
+  }
+}
+
+/* #hero — outline (stroked) display text + a blinking availability dot */
+.hero-outline {
+  -webkit-text-stroke: 1.5px var(--night);
+  color: transparent;
+}
+@media (min-width: 768px) {
+  .hero-outline {
+    -webkit-text-stroke-width: 2.5px;
+  }
+}
+
+.blink-dot {
+  animation: blink 1.6s steps(1, end) infinite;
+}
+@keyframes blink {
+  0%,
+  60% {
+    opacity: 1;
+  }
+  61%,
+  100% {
+    opacity: 0.25;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blink-dot {
     animation: none;
   }
 }

@@ -4,12 +4,11 @@ import { motion } from "framer-motion";
 import Contact from "../components/Contact";
 import ExpertisePath from "../components/ExpertisePath";
 import FreelanceWork from "../components/FreelanceWork";
+import WorkExperience from "../components/WorkExperience";
 import SliderComponent from "../components/SliderComponent";
 import Resume from "../components/Resume";
 import { SkillsBox } from "../components/SkillsBox";
 import LinesComponent from "../components/LinesComponent";
-import SectionDivider from "../components/SectionDivider";
-import SectionWaveTop from "../components/SectionWaveTop";
 
 import { Close, DragHandleOutlined, Email, GitHub, LinkedIn } from "@mui/icons-material";
 import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
@@ -62,10 +61,12 @@ const contacts = [
 const effectiveBand = (declared, theme) =>
   theme === "dark" && declared === "cream" ? "night" : declared;
 
+// monochrome: every band is white with near-black ink; structure comes
+// from the black wave/borders between sections, not colour.
 const BAND_CLASSES = {
-  night: "bg-night text-white",
+  night: "bg-cream text-night",
   cream: "bg-cream text-night",
-  grass: "bg-grass text-night",
+  grass: "bg-cream text-night",
 };
 
 const BAND_FILL = {
@@ -115,40 +116,42 @@ const Index = () => {
   const bandClass = (declared) => BAND_CLASSES[band(declared)];
   const bandFill = (declared) => BAND_FILL[band(declared)];
 
-  // Soft ("light shade") black on light bands, white only over the night band.
-  const headerTextClass = headerBand === "night" ? "text-white" : "text-night/80";
+  // whole page is white now
+  const headerTextClass = "text-night/80";
 
   return (
     <div>
       <div
         className={`navbar z-50 fixed top-0 w-full flex justify-center bg-transparent transition-colors duration-500 ${headerTextClass}`}
       >
-        <div className="navbar flex justify-between items-center w-full max-w-6xl px-4 md:px-8 py-4">
-          <p className={`${headerTextClass} opacity-80 font-bold uppercase tracking-wide text-lg md:text-xl`}>
-            Kritika
+        <div className="navbar flex justify-between items-center w-full px-5 md:px-10 py-4">
+          <p className={`${headerTextClass} font-hand font-bold text-2xl md:text-3xl`}>
+            Kritika Rajput
           </p>
 
           <div className="ml-auto flex items-center gap-8">
-            <ul className="list-none hidden sm:flex flex-row items-center gap-8">
+            <ul className="list-none hidden sm:flex flex-row items-center gap-7">
               {navLinks.map((link) => (
                 <li
                   key={link.id}
-                  className="hover:opacity-70 transition-opacity cursor-pointer"
+                  className="hover:opacity-60 transition-opacity cursor-pointer"
                   onClick={() => setActive(link.title)}
-                  onMouseEnter={() => setHoveredLink(link.id)}
-                  onMouseLeave={() => setHoveredLink(null)}
                 >
                   <a
                     href={`#${link.id}`}
-                    className="font-semibold text-sm uppercase tracking-wide flex items-center gap-1"
+                    className="flex items-center gap-1.5 text-sm font-medium"
                   >
-                    {hoveredLink === link.id && link.icon} {link.title}
+                    <span aria-hidden="true" className="opacity-50">
+                      &#8627;
+                    </span>
+                    {link.title}
                   </a>
                 </li>
               ))}
+              <li className="hover:opacity-60 transition-opacity">
+                <Resume />
+              </li>
             </ul>
-
-            <Resume />
 
             <div
               className="sm:hidden cursor-pointer flex items-center"
@@ -164,7 +167,7 @@ const Index = () => {
             animate={!toggle ? "show" : "hidden"}
             className={`${
               toggle ? "hidden" : "flex"
-            } fixed inset-0 z-40 flex-col bg-night text-white`}
+            } fixed inset-0 z-40 flex-col bg-cream text-night`}
           >
             <ul className="list-none flex flex-col pt-28 px-8 gap-8">
               {navLinks.map((link) => (
@@ -188,7 +191,7 @@ const Index = () => {
                   key={link.id}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-white"
+                  className="text-night"
                 >
                   {link.icon}
                 </a>
@@ -208,76 +211,120 @@ const Index = () => {
       >
         <div
           id="home"
-          className={`sticky top-0 h-screen z-0 flex flex-col items-center justify-center text-center px-6 md:px-16 overflow-hidden ${bandClass(
-            "grass"
-          )}`}
+          className="sticky top-0 h-screen z-0 flex flex-col justify-center overflow-hidden bg-cream text-night px-6 pt-24 md:px-14"
         >
-          <h1 className="font-extrabold tracking-[-0.02em] leading-[0.9] uppercase text-[13vw] sm:text-[10vw] md:text-[7.5vw]">
-            Kritika
-          </h1>
-          <p className="mt-5 text-base md:text-xl font-medium opacity-70">
-            Full Stack Developer &amp; Freelancer
-          </p>
-          <p className="mt-3 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] opacity-55">
-            1.5+ years of experience · Available for full-time &amp; freelance
-            work
-          </p>
+          {/* dotted texture */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-60"
+            style={{
+              backgroundImage:
+                "radial-gradient(rgba(24,24,24,0.10) 1px, transparent 1px)",
+              backgroundSize: "34px 34px",
+            }}
+          />
 
-          <div className="thumb-marquee mt-12 md:mt-16 w-full max-w-3xl mx-auto">
-            <div className="thumb-marquee-track items-center gap-4 md:gap-5 px-3">
-              {[...heroThumbs, ...heroThumbs].map((thumb, i) => (
-                <img
-                  key={`${thumb.alt}-${i}`}
-                  src={thumb.src}
-                  alt={thumb.alt}
-                  className="h-24 w-24 md:h-32 md:w-32 shrink-0 rounded-lg border-4 border-white object-cover shadow-lg shadow-night/20"
-                />
-              ))}
-            </div>
+          {/* vertical email flush against the left edge */}
+          <a
+            href="mailto:kritikarajput203@gmail.com"
+            className="absolute left-0 top-1/2 hidden -translate-y-1/2 [writing-mode:vertical-rl] rotate-180 py-6 text-xs tracking-[0.25em] text-night/40 transition-colors hover:text-night lg:block"
+          >
+            kritikarajput203@gmail.com
+          </a>
+
+          {/* stats — stacked in the bottom-right corner */}
+          <div className="absolute bottom-10 right-6 hidden flex-col gap-5 text-right md:right-10 lg:flex">
+            {[
+              ["1.5+", "Years of Experience"],
+              ["6+", "Projects Shipped"],
+              ["8", "Live Sites"],
+            ].map(([n, label]) => (
+              <div key={label}>
+                <p className="text-3xl font-extrabold text-[#181818]">{n}</p>
+                <p className="mt-0.5 text-xs uppercase tracking-wide text-night/50">
+                  {label}
+                </p>
+              </div>
+            ))}
           </div>
-          <p className="mt-8 text-[10px] md:text-xs font-semibold uppercase tracking-[0.22em] opacity-50">
-            4 recent builds
-          </p>
 
-          {/* a peek of the cream wave sits at the hero's bottom edge at rest;
-              the real cream curtain rises up and merges with it on scroll */}
-          <SectionDivider fill={bandFill("cream")} height="h-28 md:h-40" />
+          <div className="relative mx-auto w-full max-w-6xl xl:pl-10">
+            <h1 className="font-extrabold uppercase leading-[0.82] tracking-[-0.03em] text-[17vw] md:text-[9vw]">
+              <span className="block text-[#181818]">Full-Stack</span>
+              <span className="block text-night/85">Developer</span>
+            </h1>
+
+            <p className="mt-8 max-w-2xl text-base leading-relaxed text-night/60 md:text-lg">
+              Hi! I&rsquo;m{" "}
+              <span className="font-semibold text-night">Kritika</span>. A
+              full-stack developer with 1.5+ years building web &amp; mobile
+              products end to end — from clean interfaces to the APIs and
+              infrastructure behind them.
+            </p>
+
+            <a
+              href="#contact"
+              className="mt-10 inline-block border-2 border-[#181818] bg-[#181818] px-8 py-4 text-sm font-bold uppercase tracking-[0.15em] text-white transition-colors hover:bg-transparent hover:text-[#181818]"
+            >
+              Let&rsquo;s Talk
+            </a>
+
+            <p className="mt-6 flex items-center gap-2 text-sm text-night/55">
+              <span className="h-2.5 w-2.5 rounded-full bg-[#181818]" />
+              Available for work
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* WHAT I DO — the cream curtain rides up over the pinned hero, then a
-          scroll-scrubbed "snake" timeline draws the disciplines in. */}
+      {/* WHAT I DO — the section rides up over the pinned hero on scroll, then
+          a scroll-scrubbed "snake" timeline draws the disciplines in. */}
       <div
         data-band={band("cream")}
-        className={`relative z-10 -mt-[7vh] h-[280vh] md:-mt-[10vh] motion-reduce:h-auto ${bandClass(
+        className={`relative z-10 -mt-[7vh] h-[280vh] border-t-2 border-night md:-mt-[10vh] motion-reduce:h-auto ${bandClass(
           "cream"
         )}`}
       >
-        <SectionWaveTop fill={bandFill("cream")} height="h-28 md:h-52" />
         <ExpertisePath />
-        <SectionDivider fill={bandFill("night")} />
-      </div>
-
-      {/* FEATURED PROJECTS — the one pinned horizontal scene */}
-      <div data-band={band("night")} className={`relative ${bandClass("night")}`}>
-        <SliderComponent />
-        <SectionDivider fill={bandFill("cream")} height="h-28 md:h-48" />
       </div>
 
       {/* SKILLBOX */}
-      <div data-band={band("cream")} className={`relative ${bandClass("cream")}`}>
+      <div
+        data-band={band("cream")}
+        className={`relative border-t-2 border-night ${bandClass("cream")}`}
+      >
         <SkillsBox />
-        <SectionDivider fill={bandFill("grass")} />
+      </div>
+
+      {/* WORK EXPERIENCE */}
+      <div
+        data-band={band("cream")}
+        className={`relative border-t-2 border-night ${bandClass("cream")}`}
+      >
+        <WorkExperience />
       </div>
 
       {/* FREELANCE WORK */}
-      <div data-band={band("grass")} className={`relative ${bandClass("grass")}`}>
+      <div
+        data-band={band("grass")}
+        className={`relative border-t-2 border-night ${bandClass("grass")}`}
+      >
         <FreelanceWork />
-        <SectionDivider fill={bandFill("night")} />
+      </div>
+
+      {/* FEATURED PROJECTS — the one pinned horizontal scene */}
+      <div
+        data-band={band("night")}
+        className={`relative border-t-2 border-night ${bandClass("night")}`}
+      >
+        <SliderComponent />
       </div>
 
       {/* CONTACT */}
-      <div data-band={band("night")} className={`relative ${bandClass("night")}`}>
+      <div
+        data-band={band("night")}
+        className={`relative border-t-2 border-night ${bandClass("night")}`}
+      >
         <Contact />
       </div>
     </div>

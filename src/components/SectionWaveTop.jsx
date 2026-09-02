@@ -19,10 +19,17 @@ const SectionWaveTop = ({ fill = "var(--night)", height = "h-28 md:h-52" }) => {
         preserveAspectRatio="none"
         className={`block w-full ${height}`}
       >
-        {/* one broad, gentle crest — the section rises behind this edge */}
+        {/* one broad, gentle crest — the section rises behind this black edge */}
         <path
           d="M0,130 L1440,130 L1440,72 C1120,118 980,26 560,40 C320,48 150,92 0,82 Z"
           fill={fill}
+        />
+        <path
+          d="M1440,72 C1120,118 980,26 560,40 C320,48 150,92 0,82"
+          fill="none"
+          stroke="var(--night)"
+          strokeWidth="2.5"
+          vectorEffect="non-scaling-stroke"
         />
       </svg>
     </div>

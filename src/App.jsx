@@ -25,7 +25,7 @@ const App = () => {
         anchors: true,
       }}
     >
-      <div className="bg-night text-white overflow-x-clip">
+      <div className="bg-cream text-night overflow-x-clip">
         <AnimatePresence>
           <Routes>
             <Route path="/" element={<Index />} />
